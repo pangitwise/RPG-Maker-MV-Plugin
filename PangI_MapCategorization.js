@@ -7,10 +7,10 @@ Imported.PangI_MapCategorization = true;
 
 var PangI = PangI || {};
 PangI.MapCate = PangI.MapCate || {};
-PangI.MapCate.version = '1.0.0';
+PangI.MapCate.version = '1.0.1';
 
 /*:
- * @plugindesc ver. 1.0.0 맵 유형화 플러그인 / The plugin that categorize maps
+ * @plugindesc ver. 1.0.1 맵 유형화 플러그인 / The plugin that categorize maps
  * @author 팽이트위즈(PangI-Twise)
  * 
  * @param Type Numbers
@@ -50,6 +50,10 @@ PangI.MapCate.version = '1.0.0';
  * ============================================================================
  * 역사
  * ============================================================================
+ * 
+ * ver. 1.0.1:
+ * - 맵 유형에 대한 데이터가 존재하지 않는 상태에서 맵 유형을 호출하였을 시
+ * 오류가 발생하는 현상을 수정
  * 
  * ver. 1.0.0:
  * - 플러그인 완성
@@ -109,7 +113,11 @@ Game_Map.prototype.getCategory = function(typeNumber) {
         DataManager.processMapCateNotetags();
     }
 
-    return $dataMap.category[typeNumber-1];
+    if ($dataMap.category) {
+        return $dataMap.category[typeNumber-1];
+    } else {
+        return undefined;
+    }
 };
 
 //=============================================================================
